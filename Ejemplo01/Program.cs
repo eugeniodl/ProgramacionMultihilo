@@ -7,11 +7,9 @@ t1.Start();
 // Esperar a que el hilo termine antes de continuar
 t1.Join();
 
-Console.WriteLine("El hilo principal ha terminado");
-
+Console.WriteLine("El hilo principal ha terminado.");
 
 void FuncionHilo()
 {
-    // Código que será ejecutado por el hilo
-    Console.WriteLine("Este es un hilo secundario");
+    Console.WriteLine("Este es un hilo secundario.");
 }

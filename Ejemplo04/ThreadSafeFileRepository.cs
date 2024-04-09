@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Ejemplo04
 {
-    // Implementación del repositorio de archivos
     public class ThreadSafeFileRepository : IFileRepository
     {
         private readonly string _directoryPath;
@@ -23,28 +22,33 @@ namespace Ejemplo04
 
         public FileData ReadFile(string fileName)
         {
-            string filePath = Path.Combine(_directoryPath, fileName);
-
-            if(File.Exists(filePath))
+            string filePath = 
+                Path.Combine(_directoryPath, fileName);
+            lock (_lockObj)
             {
-                return new FileData
+                if (File.Exists(filePath))
                 {
-                    FileName = fileName,
-                    Content = File.ReadAllText(filePath)
-                };
-
-            }
-            else
-            {
-                return null;
+                    return new FileData
+                    {
+                        FileName = filePath,
+                        Content = File.ReadAllText(filePath)
+                    };
+                }
+                else
+                {
+                    return null;
+                } 
             }
         }
 
         public void SaveFile(FileData fileData)
         {
-            string filePath = Path.Combine(this._directoryPath, 
-                fileData.FileName);
-            File.WriteAllText(filePath, fileData.Content);
+            string filePath = 
+                Path.Combine(_directoryPath, fileData.FileName);
+            lock (_lockObj)
+            {
+                File.WriteAllText(filePath, fileData.Content); 
+            }
         }
     }
 }
