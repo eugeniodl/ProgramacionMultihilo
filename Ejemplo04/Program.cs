@@ -1,12 +1,11 @@
 ﻿using Ejemplo04;
 
-// Crear el repositorio de archivos seguro para subprocesos
-IFileRepository fileRepository = 
-    new ThreadSafeFileRepository("files");
+IFileRepository fileRepository
+    = new ThreadSafeFileRepository("files");
 
-// Crear hilos para realizar operaciones concurrentes de lectura
-// y escritura de archivos
-Thread writeThread = new Thread(() =>
+// Crear hilos pra realizar operaciones concurrentes
+// de lectura y escritura de archivos
+Thread writeThread = new Thread(()=>
 {
     for (int i = 0; i < 10; i++)
     {
@@ -17,7 +16,8 @@ Thread writeThread = new Thread(() =>
             FileName = fileName,
             Content = content
         });
-        Console.WriteLine($"Archivo guardado: {fileName}");
+        Console.WriteLine(
+            $"Archivo guardado: {fileName}");
         Thread.Sleep(100);
     }
 });
@@ -27,7 +27,8 @@ Thread readThread = new Thread(() =>
     for (int i = 0; i < 10; i++)
     {
         string fileName = $"file_{i}.txt";
-        FileData fileData = fileRepository.ReadFile(fileName);
+        FileData fileData = 
+        fileRepository.ReadFile(fileName);
         if(fileData != null)
         {
             Console.WriteLine($"Archivo leído - " +
@@ -36,7 +37,8 @@ Thread readThread = new Thread(() =>
         }
         else
         {
-            Console.WriteLine($"El archivo {fileName} no existe");
+            Console.WriteLine($"El archivo {fileName} " +
+                $"no existe");
         }
         Thread.Sleep(100);
     }

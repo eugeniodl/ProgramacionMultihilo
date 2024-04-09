@@ -1,12 +1,12 @@
 ﻿int contador = 0;
 object bloqueo = new object();
 
-// Crear varias hilos que incrementan el contador
+// Crear varios hilos que incrementan el contador
 Thread[] hilos = new Thread[5];
 
 for (int i = 0; i < 5; i++)
 {
-    hilos[i] = new Thread(new ThreadStart(IncrementarContador));
+    hilos[i] = new(new ThreadStart(IncrementarContador));
     hilos[i].Start();
 }
 
@@ -16,19 +16,16 @@ foreach (Thread t in hilos)
     t.Join();
 }
 
-Console.WriteLine("Valor final del contador {0}", contador);
-//Console.WriteLine("Valor final del contador " + contador);
-//Console.WriteLine($"Valor final del contador {contador}");
-
+Console.WriteLine($"Valor final del contador: {contador}");
 
 void IncrementarContador()
 {
     for (int i = 0; i < 1000; i++)
     {
-        lock (bloqueo)
+        lock(bloqueo)
         {
             contador++;
         }
-
+        
     }
 }

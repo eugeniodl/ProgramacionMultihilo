@@ -1,5 +1,6 @@
-﻿// Crear un nuevo hilo y especificar la función que ejecutará
-Thread t1 = new Thread(new ThreadStart(FuncionHilo));
+﻿// Crear un nuevo hilo y especificar la función
+// que ejecutará
+Thread t1 = new(new ThreadStart(FuncionHilo));
 
 // Iniciar la ejecución del hilo
 t1.Start();
@@ -7,9 +8,10 @@ t1.Start();
 // Esperar a que el hilo termine antes de continuar
 t1.Join();
 
-Console.WriteLine("El hilo principal ha terminado.");
+Console.WriteLine("El hilo principal ha terminado");
 
 void FuncionHilo()
 {
-    Console.WriteLine("Este es un hilo secundario.");
+    // Código que se ejecutará por el hilo
+    Console.WriteLine("Este es un hilo secundario");
 }

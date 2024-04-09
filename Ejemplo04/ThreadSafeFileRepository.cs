@@ -19,7 +19,6 @@ namespace Ejemplo04
                 Directory.CreateDirectory(_directoryPath);
             }
         }
-
         public FileData ReadFile(string fileName)
         {
             string filePath = 
@@ -44,7 +43,8 @@ namespace Ejemplo04
         public void SaveFile(FileData fileData)
         {
             string filePath = 
-                Path.Combine(_directoryPath, fileData.FileName);
+                Path.Combine(_directoryPath, 
+                fileData.FileName);
             lock (_lockObj)
             {
                 File.WriteAllText(filePath, fileData.Content); 
