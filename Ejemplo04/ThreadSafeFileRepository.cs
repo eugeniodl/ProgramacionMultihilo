@@ -25,18 +25,21 @@ namespace Ejemplo04
         {
             string filePath = Path.Combine(_directoryPath, fileName);
 
-            if(File.Exists(filePath))
+            lock (_lockObj)
             {
-                return new FileData
+                if (File.Exists(filePath))
                 {
-                    FileName = fileName,
-                    Content = File.ReadAllText(filePath)
-                };
+                    return new FileData
+                    {
+                        FileName = fileName,
+                        Content = File.ReadAllText(filePath)
+                    };
 
-            }
-            else
-            {
-                return null;
+                }
+                else
+                {
+                    return null;
+                } 
             }
         }
 
@@ -44,7 +47,10 @@ namespace Ejemplo04
         {
             string filePath = Path.Combine(this._directoryPath, 
                 fileData.FileName);
-            File.WriteAllText(filePath, fileData.Content);
+            lock (_lockObj)
+            {
+                File.WriteAllText(filePath, fileData.Content); 
+            }
         }
     }
 }
